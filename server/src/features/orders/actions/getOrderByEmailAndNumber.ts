@@ -64,14 +64,20 @@ export async function getOrderByEmailAndNumber(
     },
   ]);
 
-  return result as {
+  if (result.length === 0) {
+    return null;
+  }
+
+  return result[0] as {
     address: Address;
     orderNumber: string;
     trackingNumber: string;
-    products: Product;
+    products: Product[];
     checkpoint: {
       statusText: string;
       statusDetails: string;
     };
-  }[];
+  };
 }
+
+export type OrderDetail = Awaited<ReturnType<typeof getOrderByEmailAndNumber>>;

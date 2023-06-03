@@ -1,23 +1,30 @@
 import { Link } from "react-router-dom";
-import type { GetOrders } from "../../../lib/api";
 import { OrderCard } from "./OrderCard";
+import type { SimplifiedOrder } from "../lib/ordersApi";
 
 export type OrdersListProps = {
-  orders: GetOrders[];
+  orders: SimplifiedOrder[];
 };
 
 export function OrdersList({ orders }: OrdersListProps) {
   if (orders.length === 0) {
-    return null;
+    return (
+      <p>
+        <span className="font-bold">404</span>! There are no orders for this
+        email address.
+      </p>
+    );
   }
 
   return (
-    <div>
+    <ul>
       {orders.map((order) => (
-        <Link key={order.orderNumber} to={`/orders/${order.orderNumber}`}>
-          <OrderCard order={order} />
-        </Link>
+        <li key={order.orderNumber} className="mb-4">
+          <Link to={`/orders/${order.orderNumber}`}>
+            <OrderCard order={order} />
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

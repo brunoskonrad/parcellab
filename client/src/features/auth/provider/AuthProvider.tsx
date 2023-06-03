@@ -32,8 +32,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const authenticate = useCallback(
     (email: string) => {
-      setEmail(email);
       localStorage.setItem("email", email);
+      setEmail(email);
 
       return Promise.resolve();
     },
@@ -41,8 +41,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   );
 
   const signOff = useCallback(() => {
-    setEmail(null);
     localStorage.removeItem("email");
+    setEmail(null);
 
     return Promise.resolve();
   }, [setEmail]);

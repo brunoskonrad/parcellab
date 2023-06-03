@@ -1,32 +1,6 @@
-import { Prisma, PrismaClient } from "@prisma/client";
 import groupBy from "lodash.groupby";
-
-import { parseCSV } from "../../lib/parseCSV";
-import { Order, OrderModel, Product } from "../orders/OrderModel";
-
-export type TrackingCSV = {
-  orderNo: string;
-  tracking_number: string;
-  courier: string;
-  street: string;
-  zip_code: number;
-  city: string;
-  destination_country_iso3: string;
-  email: string;
-  articleNo?: string;
-  articleImageUrl?: string;
-  quantity?: number;
-  product_name?: string;
-};
-
-export async function importTracking(csv: string): Promise<boolean> {
-  const trackings = await parseCSV<TrackingCSV>(csv);
-  const orders = parseTrackingsCSVToOrders(trackings);
-
-  await OrderModel.insertMany(orders);
-
-  return true;
-}
+import { Order, Product } from "../../orders/OrderModel";
+import type { TrackingCSV } from "../types";
 
 export function parseTrackingsCSVToOrders(trackings: TrackingCSV[]): Order[] {
   const groupped = groupBy(trackings, (tracking) => {
@@ -56,7 +30,7 @@ function merge(trackings: TrackingCSV[]): Order {
   };
 }
 
-function mergeProducts(trackings: TrackingCSV[]): Product[] {
+export function mergeProducts(trackings: TrackingCSV[]): Product[] {
   return trackings
     .filter(
       (tracking) =>

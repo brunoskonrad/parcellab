@@ -1,10 +1,11 @@
 import { redirect, useLoaderData } from "react-router-dom";
-import { GetOrders, getOrders } from "@/lib/api";
 import { OrdersList } from "../components/OrdersList";
+import { PageHeading } from "@/components/PageHeading";
+import { SimplifiedOrder, getOrders } from "../lib/ordersApi";
 
 type OrdersPageData = {
   error?: string;
-  orders: GetOrders[];
+  orders: SimplifiedOrder[];
 };
 
 export function OrdersPage() {
@@ -12,7 +13,7 @@ export function OrdersPage() {
 
   return (
     <div>
-      <h2>Your Orders</h2>
+      <PageHeading>Your Orders</PageHeading>
 
       <OrdersList orders={pageData.orders} />
     </div>

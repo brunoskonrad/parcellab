@@ -1,15 +1,65 @@
-import { GetOrder, getOrder } from "@/lib/api";
+import { DisplayProperty } from "@/components/DisplayProperty";
+
 import { LoaderFunctionArgs, redirect, useLoaderData } from "react-router-dom";
+import { PageHeading } from "@/components/PageHeading";
+import { AddressView } from "../components/AddressView";
+import { ReturnLink } from "@/components/ReturnLink";
+import { NotFoundView } from "@/components/404";
+import { ProductView } from "../components/ProductView";
+import { OrderDetail, getOrder } from "../lib/ordersApi";
 
 type OrdersPageData = {
   error?: string;
-  order: GetOrder[];
+  order: OrderDetail;
 };
 
 export function OrderDetailsPage() {
   const pageData = useLoaderData() as OrdersPageData;
+  const { order } = pageData;
 
-  return <div>Order Detais Page {JSON.stringify(pageData.order, null, 2)}</div>;
+  if (!order) {
+    return <NotFoundView to="/orders" />;
+  }
+
+  return (
+    <div>
+      <ReturnLink to="/orders">Back to orders</ReturnLink>
+
+      <PageHeading>Order Detais Page</PageHeading>
+
+      <DisplayProperty
+        className="mb-4"
+        sectionTitle="Order Number"
+        value={order.orderNumber}
+      />
+
+      <AddressView className="col-span-2 mb-4" address={order.address} />
+
+      <DisplayProperty
+        className="mb-4"
+        sectionTitle="Tracking number"
+        value={order.trackingNumber}
+        description={order.checkpoint.statusDetails}
+      />
+
+      {order.products.length > 0 ? (
+        <div>
+          <h3 className="font-bold text-lg mb-2">Products</h3>
+
+          <ul>
+            {order.products.map((product) => (
+              <li
+                key={product.articleNumber}
+                className="flex flex-row flex-nowrap items-center mb-4"
+              >
+                <ProductView product={product} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </div>
+  );
 }
 
 export async function orderDetailPageLoader({ params }: LoaderFunctionArgs) {
@@ -26,6 +76,8 @@ export async function orderDetailPageLoader({ params }: LoaderFunctionArgs) {
     if (response.status === 401) {
       return redirect("/");
     }
+
+    console.log("*** response", response, response.data);
 
     return {
       order: response.data,

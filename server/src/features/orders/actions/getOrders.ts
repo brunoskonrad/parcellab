@@ -1,7 +1,12 @@
 import { Address, OrderModel } from "../OrderModel";
 
-export async function getOrders() {
+export async function getOrders(email: string | string[] | undefined) {
   const response = await OrderModel.aggregate([
+    {
+      $match: {
+        email,
+      },
+    },
     {
       $project: {
         address: 1,
