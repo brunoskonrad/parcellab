@@ -48,11 +48,11 @@ export function OrderDetailsPage() {
 
           <ul>
             {order.products.map((product) => (
-              <li
-                key={product.articleNumber}
-                className="flex flex-row flex-nowrap items-center mb-4"
-              >
-                <ProductView product={product} />
+              <li key={product.articleNumber}>
+                <ProductView
+                  className="flex flex-row flex-nowrap items-center mb-4"
+                  product={product}
+                />
               </li>
             ))}
           </ul>
@@ -73,17 +73,15 @@ export async function orderDetailPageLoader({ params }: LoaderFunctionArgs) {
 
     const response = await getOrder(params["orderNumber"]);
 
-    if (response.status === 401) {
-      return redirect("/");
-    }
-
-    console.log("*** response", response, response.data);
-
     return {
       order: response.data,
       error: undefined,
     };
   } catch (error) {
+    if (error.response.status === 401) {
+      return redirect("/");
+    }
+
     return {
       order: null,
       error: error.message,

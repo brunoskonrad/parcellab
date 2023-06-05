@@ -1,19 +1,19 @@
 export function ParcelLabLogo() {
   return (
     <svg
-      width="100px"
+      width="90px"
       viewBox="0 0 520 177"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
     >
       {" "}
       <title>parcelLab</title>{" "}
-      <g stroke="none" stroke-width="1" fill-rule="evenodd">
+      <g stroke="none" strokeWidth="1" fillRule="evenodd">
         {" "}
         <g
           transform="translate(17.000000, 32.000000)"
           fill="#111"
-          fill-rule="nonzero"
+          fillRule="nonzero"
         >
           {" "}
           <path d="M177,57.4 C177,68.8 169.3,76.8 159.1,76.8 C154.3,76.9 149.7,74.8 146.7,71.1 L146.7,94.1 L138.1,94.1 L138.1,38.9 L146.7,38.9 L146.7,43.9 C149.8,40.2 154.3,38.1 159.2,38.1 C169.4,38.1 177,46 177,57.4 Z M168.2,57.4 C168.2,51.1 163.8,46 157.5,46 C151.2,46 146.7,51 146.7,57.4 C146.7,63.8 151.3,68.9 157.6,68.9 C163.9,68.9 168.2,63.8 168.2,57.4 L168.2,57.4 Z"></path>{" "}

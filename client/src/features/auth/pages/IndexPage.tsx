@@ -13,7 +13,7 @@ export function IndexPage() {
   }, [navigate, isAuthenticated]);
 
   return (
-    <main className="flex h-full place-items-center">
+    <main className="flex justify-center items-center pt-2 md:pt-16">
       {isAuthenticated ? <Loading /> : <SignInView />}
     </main>
   );
@@ -29,12 +29,8 @@ function SignInView() {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log("*** onSubmit");
-
     const formData = new FormData(event.target as HTMLFormElement);
     authenticate(formData.get("email")?.toString()!);
-
-    console.log("*** onSubmit 2");
   };
 
   return (

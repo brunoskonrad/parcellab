@@ -24,7 +24,6 @@ function merge(trackings: TrackingCSV[]): Order {
       zipCode: firstTracking.zip_code.toString(),
       street: firstTracking.street,
     },
-
     products: mergeProducts(trackings),
     checkpoints: [],
   };

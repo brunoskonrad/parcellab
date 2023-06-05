@@ -63,7 +63,7 @@ function Layout() {
 
   return (
     <div className="min-h-screen bg-orange-50 flex flex-col">
-      <header className="p-4 bg-orange-100 flex flex-row justify-between items-center shadow-lg shadow-orange-100">
+      <header className="p-4 bg-orange-100 flex flex-row justify-between items-center shadow-lg shadow-orange-100 fixed w-full h-[60px]">
         <Link to="/">
           <ParcelLabLogo />
         </Link>
@@ -81,7 +81,7 @@ function Layout() {
         ) : null}
       </header>
 
-      <div className="p-4 flex-1 max-w-5xl w-full self-center">
+      <div className="p-4 mt-[60px] flex-1 max-w-5xl w-full m-auto">
         <Outlet />
       </div>
     </div>

@@ -4,9 +4,17 @@ import { getOrderByEmailAndNumber } from "./features/orders/actions/getOrderByEm
 import multer from "multer";
 import { importTracking } from "./features/import/actions/importTrackings";
 import { importCheckpoints } from "./features/import/actions/importCheckpoints";
+import cors from "cors";
+import helmet from "helmet";
+import bodyParser from "body-parser";
 
 export const app: Express = express();
 const upload = multer();
+
+app.use(cors());
+app.use(helmet());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /**
  * Checks if the user is authenticated. User needs to have an email set on the x-authentication-email header

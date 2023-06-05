@@ -1,16 +1,16 @@
 const fs = require("fs");
 const path = require("path");
 
-async function seedTrackings() {
+async function seedResource(resource) {
   const formData = new FormData();
 
-  const seedPath = path.join(__dirname, "../", "csv/trackings.csv");
+  const seedPath = path.join(__dirname, "../", `csv/${resource}.csv`);
   const open = fs.readFileSync(seedPath);
   const fileBlob = new Blob([open]);
 
   formData.append("csv", fileBlob);
 
-  const response = await fetch("http://localhost:3020/import/trackings", {
+  const response = await fetch(`http://localhost:3020/import/${resource}`, {
     method: "POST",
     body: formData,
   });
@@ -18,21 +18,12 @@ async function seedTrackings() {
   return response.ok;
 }
 
+async function seedTrackings() {
+  return seedResource("trackings");
+}
+
 async function seedCheckpoints() {
-  const formData = new FormData();
-
-  const seedPath = path.join(__dirname, "../", "csv/checkpoints.csv");
-  const open = fs.readFileSync(seedPath);
-  const fileBlob = new Blob([open]);
-
-  formData.append("csv", fileBlob);
-
-  const response = await fetch("http://localhost:3020/import/checkpoints", {
-    method: "POST",
-    body: formData,
-  });
-
-  return response.ok;
+  return seedResource("checkpoints");
 }
 
 async function seed() {

@@ -24,15 +24,15 @@ export async function ordersPageLoader() {
   try {
     const response = await getOrders();
 
-    if (response.status === 401) {
-      return redirect("/");
-    }
-
     return {
       orders: response.data,
       error: undefined,
     };
   } catch (error) {
+    if (error.response.status === 401) {
+      return redirect("/");
+    }
+
     return {
       orders: [],
       error: error.message,
